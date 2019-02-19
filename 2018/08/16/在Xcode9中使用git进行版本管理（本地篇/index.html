@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,git,Xcode,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在Xcode9中使用git进行版本管理（本地篇)https://www.raywenderlich.com/153084/use-git-source-control-xcode-9 Xcode 9 重新定义了 Git ，在资源导航栏中新增了一个管理 Git 的按钮（左二），使得其在管理版本方面更加强大和便捷，现在就让我们来看一下这项 Xcode 9 的新特性。本文虽然长，但是绝大多数都是图片，内">
+<meta name="keywords" content="iOS,git,Xcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Xcode9中使用git进行版本管理（本地篇)">
+<meta property="og:url" content="https://tryagainplease.github.io/2018/08/16/在Xcode9中使用git进行版本管理（本地篇/index.html">
+<meta property="og:site_name" content="HW的博客">
+<meta property="og:description" content="在Xcode9中使用git进行版本管理（本地篇)https://www.raywenderlich.com/153084/use-git-source-control-xcode-9 Xcode 9 重新定义了 Git ，在资源导航栏中新增了一个管理 Git 的按钮（左二），使得其在管理版本方面更加强大和便捷，现在就让我们来看一下这项 Xcode 9 的新特性。本文虽然长，但是绝大多数都是图片，内">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-dacf4ec701264832.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-e04e861198d1ddc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/726/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-00c1c63ccab87480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/506/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-c4a648139893865d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-e98a8fd94552e0ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-5ce13c009707ea8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-62b7ec7d8e33edf5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/573/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-d05146d408c04258.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/795/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-87b361c7dd8f3248.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-cd538356b54e2a43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-27bd3862972a29a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/286/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-945201ee029433a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-6e8b3729868dd291.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-782ba62b507e4316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-a5e5a0d1048a696d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-7efd8cfa8db00893.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/665/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-1d8eb93dac76ed89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-a6d1cec29a047172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/267/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-61389e30e56a93ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-1d580efc4e2ba3af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/316/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-ecb620250286abb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/477/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-add551a436993007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/270/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-4d708ff7f91dfc85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-669112bd5126635d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-2ba9315ec7ef8da2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-189e2734fce097e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-396fe3155cf433e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-69d493d4295198a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/417/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-3c0a4e2f570e4415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-ee72a854a0ce0d8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/116/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-596a8e54bc500382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-c3b799e4116fb770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-885c0f416aa9950f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/485/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-4591211c72bc6bde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-7c3e7470abe2943a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/225/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-28497342cbd85bce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/246/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-985c3c728e4d6682.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/226/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-6cf364b3e4c4a5e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/209/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-93bdaddcc31ed82b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-4e71cfad2f0c4d57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/422/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-9cb3c93cdbb04f48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/448/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-930f2bdfcc70f4e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/479/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-60bf3e6a113e6d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/457/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-f3df5ff935f861ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-141edd09380e0836.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/267/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-7f9c3c122acf20f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/527/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-b62000972846a4e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/453/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-ab5b8b1a3520a241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-b4e2fe2b0e1c40a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6636506-57604d3b1294a8d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/451/format/webp">
+<meta property="og:updated_time" content="2019-02-19T08:27:02.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Xcode9中使用git进行版本管理（本地篇)">
+<meta name="twitter:description" content="在Xcode9中使用git进行版本管理（本地篇)https://www.raywenderlich.com/153084/use-git-source-control-xcode-9 Xcode 9 重新定义了 Git ，在资源导航栏中新增了一个管理 Git 的按钮（左二），使得其在管理版本方面更加强大和便捷，现在就让我们来看一下这项 Xcode 9 的新特性。本文虽然长，但是绝大多数都是图片，内">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6636506-dacf4ec701264832.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728/format/webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://tryagainplease.github.io/2018/08/16/在Xcode9中使用git进行版本管理（本地篇/">
+
+
+
+
+
+  <title>在Xcode9中使用git进行版本管理（本地篇) | HW的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HW的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">愿岁月静好，时光不老</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tryagainplease.github.io/2018/08/16/在Xcode9中使用git进行版本管理（本地篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HW">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HW的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在Xcode9中使用git进行版本管理（本地篇)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T13:13:08+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.jianshu.com/p/b8a8b5cae365" target="_blank" rel="noopener">在Xcode9中使用git进行版本管理（本地篇)</a><br><a href="https://www.raywenderlich.com/153084/use-git-source-control-xcode-9" target="_blank" rel="noopener">https://www.raywenderlich.com/153084/use-git-source-control-xcode-9</a></p>
+<p>Xcode 9 重新定义了 Git ，在资源导航栏中新增了一个管理 Git 的按钮（左二），使得其在管理版本方面更加强大和便捷，现在就让我们来看一下这项 Xcode 9 的新特性。<br>本文虽然长，但是绝大多数都是图片，内容介绍详细，适合新手迅速上手 Git。</p>
+<p>无论你是iOS个人开发还是团队协作，你都应该在你的工程中使用版本控制（Source control）。版本控制的强大表现在它可以帮助你轻松的恢复到之前的老版本，亦或是低风险的在你的app中添加一个新的功能，以及直观地看到新增、删减等操作所改变的代码在工程中的位置。其中，Xcode自带的Git工具就是最好的版本控制系统之一。<br><a id="more"></a><br>在本文中，你将轻松的学习如何使用这项在 Xcode 9 中的强大功能。</p>
+<p>——新建程序</p>
+<p>与其讨论Git的理论，不如直接动手操作一遍。你将新创建一个功能并且完成一些任务，通过这些任务，你将很快掌握Git。</p>
+<p>我们先建立一个单页面工程</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-dacf4ec701264832.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728/format/webp" alt="image"></p>
+<p>填入以下信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-e04e861198d1ddc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/726/format/webp" alt="image"></p>
+<p>按下Next，在接下来的画面勾选“Create git repository on My Mac”，<br>再点击Create，创建成功（如果项目已经存在，则在Source Control-&gt;Create Git Repositories中创建）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-00c1c63ccab87480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/506/format/webp" alt="image"></p>
+<p>Xcode 将会创建一个Git仓库（在你的项目文件下可见），所有的控制信息，数据都会存贮其内，Git仓库会管理你的程序版本以及跟踪代码的改变，可以将Git仓库看做一个所有版本的数据库。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-c4a648139893865d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300/format/webp" alt="image"></p>
+<p>在你开展工作的时候，你将添加新文件、改变代码以及改变程序许多次。<br>在辛辛苦苦地码了很多代码之后，你的程序进入了“known good”状态（就是说当前版本无BUG，运行良好），将这些改变存储进Git仓库将是一个好主意，存储这些“known good”状态下的代码可以在未来需要的时候返回到这个版本。<br>是不是每新建一个文件就要进行版本存储呢？完全不用，那些没有进行版本存储的文件依然被你的工程所持有，直到你认为需要存储了再把他们一起存进Git仓库。<br>让我们来动手试一下，打开 “Source Control navigator”（左上第二个按钮），点击展开列表，会看到Branches、Tags、Remotes三个文件,展开Branches，会看到一个分支master，点击master，你会看到一个系统初始化时自动提交的版本（注释为 Initial Commit）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-e98a8fd94552e0ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>现在，为你的程序做点改变，打开AppDelegate.swift 并按照图示改变方法application(_:didFinishLaunchingWithOptions:)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication,</span><br><span class="line">        didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">  print(&quot;Application did finish launching&quot;)</span><br><span class="line">  return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在你完成之后，你会发现AppDelegate.swift文件右侧会出现一个M</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-5ce13c009707ea8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp" alt="image"></p>
+<p>“M”意味着“改变了代码但没有提交Git”。<br>接下来，打开open ViewController.swift然后写下以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func buttonClicked(_ sender: UIButton) &#123;</span><br><span class="line">  print(&quot;This is a Git tutorial&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在打开 Main.storyboard 然后拖拉一个按钮，改变他的title（随你便）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-62b7ec7d8e33edf5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/573/format/webp" alt="image"></p>
+<p>连接代码和按钮（如何连接就不写了），并设置 Touch Up Inside 事件，设置点击后会打印“This is a Git tutorial”信息；</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-d05146d408c04258.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/795/format/webp" alt="image"></p>
+<p>如果你确认一下工程导航，你会发现现在会有3个“M”在你的文件右侧。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-87b361c7dd8f3248.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp" alt="image"></p>
+<p>Run一下你的程序保证没出问题。然后点击按钮你会看到控制台输出了 “This is a Git tutorial”信息。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-cd538356b54e2a43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440/format/webp" alt="image"></p>
+<p>OK,现在你的程序就是 “known good” 状态了，让我们来提交一下。</p>
+<p>——提交版本</p>
+<p>提交文件很简单，在菜单中选择 Source Control\Commit 。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-27bd3862972a29a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/286/format/webp" alt="image"></p>
+<p>会出现一个窗口，和下面的图片类似：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-945201ee029433a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>你可以看到，屏幕被分成了两块，左边的是目前尚未存储的版本，右边是最近一次提交的版本。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-6e8b3729868dd291.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>屏幕（1）包含了那些尚未提交的改变，默认情况下，Xcode会认为你希望将所有的改变提交Git，如果你想将某处代码取消提交，就取消（2）处的勾选，你可以自己决定哪些改变会被提交。</p>
+<p>蓝色高亮的区域就是你改变代码所在的位置，任何改变，包括一个空格，也会被Git跟踪并显示蓝色高亮。</p>
+<p>你可以自己试试，打开 ViewController.swift, 增加几行空行，你的结果就会如下所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-782ba62b507e4316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>如你所见，Git跟踪任何细节的改变。<br>在两个窗口中间（2区域），所有的改变都由Xcode枚举展示。<br>你可以取消勾选改变3，这样他就不会被提交了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-a5e5a0d1048a696d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/244/format/webp" alt="image"></p>
+<p>在你提交之前，Xcode会要求你在底部输入提交信息,这是为了帮助你更好的记忆版本信息。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-7efd8cfa8db00893.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/665/format/webp" alt="image"></p>
+<p>现在按下 Commit 3 Files 。这样你就完成了第一次提交！你可以返回Source Control navigator 然后看见它。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-1d8eb93dac76ed89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>以上操作已经占据了你操作Git的90%，很简单吧？现在你已经没有理由不去使用Git了（哈哈哈）。</p>
+<p>——新建分支</p>
+<p>另一个Git版本管理的特色就在于可以允许你将改变提交到不同的分支之中。<br>等等，分支是啥？？？</p>
+<p>分支是一种保存一系列Git提交的方式。通过使用不同的分支，你可以将不同功能分隔以减少破坏程序的风险。<br>无论你相不相信，你已经使用分支了。当Git仓库被创建时，Git创建了一个名叫 “ master ” 的分支，至今为止你的工作都在这个分支中进行。</p>
+<p>工程的主要功能应该提交至 “ master ” 分支，你可以使用其他分支来管理那些暂未有计划发布的功能代码，也可以用来管理永远不会发布的功能代码。<br>举个栗子，假设你要在你的app内加入一个地图功能，但是他近期不会发布到产品上。看起来如下所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-a6d1cec29a047172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/267/format/webp" alt="image"></p>
+<p>注意 “A” 代表文件 MapForItinerary.swift 还没有加入Git仓库。<br>选择 Source Control\Commit 提交。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-61389e30e56a93ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>如果你选择了带有 “A” 的文件，你会发现右侧没有任何东西，这是因为此文件从未进行存储。<br>新增一个地图功能可能对你的app来说是一个很大的改变，所以这最好使用其他分支。这将降低地图代码所带来的风险。<br>现在我们先取消提交，去新建一个分支，用来存储地图功能的版本，打开 Source Control navigator ，在 “master” 上右击，点选 “ Branch from “master ”。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-1d580efc4e2ba3af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/316/format/webp" alt="image"></p>
+<p>Xcode 要求你输入新分支的名称。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-ecb620250286abb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/477/format/webp" alt="image"></p>
+<p>我们将其命名为 map_feature 然后创建。<br>选择新建的分支，你会发现原本在 “master” 分支右侧的 current 的文字移到了 “map_feature” 分支上。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-add551a436993007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/270/format/webp" alt="image"></p>
+<p>现在我们再次提交，会提交至“map_feature” 分支上。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-4d708ff7f91dfc85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>注意提交完成后所有的字母提示信息都消失了，这意味着你不再有任何没有提交的改变。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-669112bd5126635d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/269/format/webp" alt="image"></p>
+<p>——返回上一个历史版本</p>
+<p>你坐在办公室码着代码，构建最新需求所要求的功能。你觉得有点累，去拿了点零食坐在旁边休息，这时你的眉头一皱，忽然发现需求有一种更好的实现方式，此时此刻，你可能希望能够返回到上一个版本重构新需求。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-2ba9315ec7ef8da2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300/format/webp" alt="image"></p>
+<p>Git 让这个过程变得无比方便。<br>我们来模拟一下这个过程，打开 Main.storyboard 并拖进一个新的试图控制器。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-189e2734fce097e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>打开 MapForItinerary.swift 然后新加一个 sayHello() 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func sayHello() &#123;</span><br><span class="line">  print(&quot;Hello from MapForItinerary&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这时文件右侧出现了 “M”，表示文件已被修改但尚未提交。<br>此刻，你可以选择性的取消一些文件的改变。选择 Main.storyboard 然后在菜单中选择 Source Control\Discard Changes in “Main.storyboard”…</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-396fe3155cf433e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310/format/webp" alt="image"></p>
+<p>Xcode 会向你确认时候返回状态至上次存储此文件时。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-69d493d4295198a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/417/format/webp" alt="image"></p>
+<p>点击 Discard Changes ，你会发现刚刚创建的视图控制器不见了。这项功能在你新增了一连串的代码却BUG频出的时候十分管用，你可以随时返回到一个 “known good” 状态。<br>除了丢弃整体实体文件的改变之外，你还选择性的丢弃文件内的一些局部改变。<br>MapForItinerary.swift 依然有个 “M” ,选择 Select Source Control\Commit… ，点击改变区域的下拉箭头选择 Discard Change：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-3c0a4e2f570e4415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>哇！你成功去掉了这个改变，这里再也没有什么东西可以提交了，点击 Cancel 关闭提交窗口。<br>既然你尝试了两种丢弃改变的方式，你可能会好奇这两种方式有什么区别。<br>尽管两种方式的结果是一样的，但他们还是存在很大的不同：<br>在提交界面丢弃掉改变并不会删除代码，代码依然存在于工程之内。<br>另一种方式在不提交代码的同时，还会在工程内删除这些导致改变的代码。</p>
+<p>——比较多个历史版本</p>
+<p>丢弃改变确实是一种好的回溯方式，但是，在某些情况下，这种方式有一定的局限性。<br>Git 允许你为你的工程中所拥有的多个改变保存修正方式。这些全部由 Git仓库 管理。</p>
+<p>如果你选择抛弃某个文件的所有改变（discard changes），Git会恢复此文件最后一个提交的版本，这正是这种方式（discard changes）的局限所在。</p>
+<p>随着时间流逝，你的Git仓库将会保存大量的历史版本。假设你希望某个特定的文件恢复到第一个或者第二个版本， discarding change就无法做到了。不用气馁，Xcode 和 Git 自有办法。</p>
+<p>选择 ViewController.swift，然后在菜单选择 View\Version Editor\Show Comparison View。或者选择右上角的第三个按钮。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-ee72a854a0ce0d8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/116/format/webp" alt="image"></p>
+<p>现在你的界面将会分割成两个窗口</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-596a8e54bc500382.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>这种模式可以使你能够比较当前版本与之前任意版本之间的变化，整体界面看起来就像提交界面一般。默认情况下，你当前的资源文件会显示在左侧屏幕，最后一次保存的资源文件会出现在右侧屏幕。（Git 将管理的这些版本称呼为HEAD）</p>
+<p>点击右下角底部的按钮，就可以自由选择之前存储的版本，从而实现当前文件与之前存储的版本文件之间的对比。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-c3b799e4116fb770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>如下图所示，你可以选择之前的HEAD，你可以看到之前的各个版本信息。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-885c0f416aa9950f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/485/format/webp" alt="image"></p>
+<p>现在，只需要点击一下就可以在右侧屏幕显示出不同版本的文件了，真简单~~</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-4591211c72bc6bde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>一旦你恢复到了一个之前的版本，你就需要将这个“新”版本提交Git，现在就试试吧~<br>如何选择一个你想要的之前版本？你可以使用 Source Control navigator 就像文章之前操作的那样。还有另外一个方法，长按版本编辑按钮然后选择 Log。你也可以在菜单选择View\Version Editor\Show Log 。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-7c3e7470abe2943a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/225/format/webp" alt="image"></p>
+<p>Xcode 会列出含有改变（相对当前文件）的提交版本。注意列表中的提交信息都带有一个提交标识（commit identifier）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-28497342cbd85bce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/246/format/webp" alt="image"></p>
+<p>这些标识和你的列表中的历史修订是一一对应的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-985c3c728e4d6682.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/226/format/webp" alt="image"></p>
+<p>你可以点击 Show modified files 去展开更多的细节。<br>另外一个令人称奇的功能叫做 Blame View 。此视图展示了提交版本中哪些行发生了改变。<br>切换到 Blame View ，长按版本编辑按钮然后选择 Blame。你也可以从在菜单中选择 View\Version Editor\Show Blame View。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-6cf364b3e4c4a5e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/209/format/webp" alt="image"></p>
+<p>你的屏幕看起来如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-93bdaddcc31ed82b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>为了看到更多改变的细节，你可以按下日期旁边的 info 按钮。弹出来的气泡会展示此处改变是由谁提交的，何时提交的以及提交的时候提交时攥写的描述信息。右下角有一个 Open in Comparison 的按钮，点击会切换到 Comparison 界面，然后将此版本的文件置于右侧屏幕。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-4e71cfad2f0c4d57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/422/format/webp" alt="image"></p>
+<p>——合并分支</p>
+<p>你在之前的文章中学到了Git允许你使用多条分支进行版本管理。你也知道了使用多分支的好处。接下来，如果你想将其他的分支功能加入到当前版本呢？简单！你可以将你的其他分支融入到你的主分支中。假设你的 map_feature 分支还没完成但是你的老板让你在主界面上加一个 label ，为了满足需求，你将离开 map_feature 分支然后从 “known good” 状态的 master 分支中创建一个新分支。<br>切换到 Source Control navigator ，右击 master branch 然后点选<br>Branch from “master”….</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-9cb3c93cdbb04f48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/448/format/webp" alt="image"></p>
+<p>就将新的分支命名为 new_label 吧 ，点击创建</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-930f2bdfcc70f4e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/479/format/webp" alt="image"></p>
+<p>注意，你依然在 map_feature 分支上工作，右击 new_label 分支然后点击 Checkout ，现在你的提交工作都会在new_label 分支下进行。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-60bf3e6a113e6d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/457/format/webp" alt="image"></p>
+<p>Xcode 会向你确认是否切换分支，这里我们点击 Checkout。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-f3df5ff935f861ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412/format/webp" alt="image"></p>
+<p>通过检查 Source Control navigator 下的 (current) 标签，你可以确认现在的提交都会提交至 new_label 分支中了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-141edd09380e0836.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/267/format/webp" alt="image"></p>
+<p>现在让我们加入老板要求的 label 。切换回标准编辑界面，打开Main.storyboard ，然后在主界面上拖一个 UILabel。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-7f9c3c122acf20f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/527/format/webp" alt="image"></p>
+<p>在保证没有什么问题之后，我们需要将改变提交至 Git仓库，别忘了下方的攥写提交信息。现在切换到 master 分支（checkout）运行一遍，你会发现，刚刚加的 UILabel 不见了，现在我们要将这个新的分支融入到 master 分支中。<br>在 Source Control navigator 下右击 new_label 分支点击 Merge “new_label” into “master”….</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-b62000972846a4e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/453/format/webp" alt="image"></p>
+<p>Xcode 会向你确认行动，点击 Merge</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-ab5b8b1a3520a241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412/format/webp" alt="image"></p>
+<p>融合界面会出现，你可以在此为融合“加工”。目标分支会出现在屏幕右侧，你的当前文件会出现在左侧。使用底部的按钮可以控制出现冲突的时候融合的选择（左边，右边，还是两边都要）。对于本例来说，Xcode 默认设定为 correct one （没有出现冲突）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-b4e2fe2b0e1c40a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
+<p>最终，点击 Merge 按钮来开始融合过程。如果没有毛病，你就会在Main.storyboard 上看到改变（新增了一个 UILabel ），现在你的改变已经融合进 master 分支了。使用这些方法来检阅你的提交历史，你将学会如何查实历史版本都有哪些改变。</p>
+<p>——忽略配置文件</p>
+<p>回到你第一次提交 Git 的时候，除了你写的资源文件外，Git 也跟踪了一些由 Xcode 管理的文件，这些文件是工程能够顺利开展的必备条件，你需要这些文件重构你的 app 或者和其他人进行合作。</p>
+<p>尽管它们很有用，我们却不一定将他们提交到 Git 进行管理，因为每次改变 Xcode 都会重新创建它们。事实上，保存它们会令 Git 做一些无用功，甚至让我们在查找历史版本的改变时更加麻烦。</p>
+<p>Git 提供了一个机制去忽略这些文件：这类文件后缀名为 .gitignore 。因为他们的名称导致了 macOS 将这类文件视作一个隐藏文件，一般在你的工程中或者 Finder 中看不到。不用担心，Git 会找到他们并且使用他们。</p>
+<p>与其自己动手写一个 <em>.gitignore</em> 文件，不如去 <a href="https://link.jianshu.com?t=https://www.gitignore.io/" target="_blank" rel="noopener">gitignore.io</a>.下载一个。</p>
+<p>首先，打开终端然后输入以下命令，你只需要做一次便可以一劳永逸了(复制注意去掉$)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.ignore &apos;!gi() &#123; curl -L -s https://www.gitignore.io/api/$@ ;&#125;; gi&apos;</span><br></pre></td></tr></table></figure>
+<p>现在，对于任何使用 Git 的工程，输入以下命令行（如果是OC项目，将下面代码的swift 替换为 Objective-C ）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;directory where your project is stored&gt;</span><br><span class="line">git ignore swift,macos &gt;.gitignore</span><br><span class="line">git add .gitignore</span><br><span class="line">git commit -m &quot;Add .gitignore file&quot;</span><br></pre></td></tr></table></figure>
+<p>这会为 macOS 上的 Swift code 下载一个 .gitignore 配置文件，你的终端可能会看起来如下所示</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6636506-57604d3b1294a8d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/451/format/webp" alt="image"></p>
+<p>你已经将一个 .gitignore 文件加入了你的 Git 仓库，从现在开始，他会过滤掉那些不必要的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意：趁早加入一个  .gitignore 文件是一个好主意。</span><br></pre></td></tr></table></figure>
+<p>——结束语</p>
+<p>作者：王博达<br>链接：<a href="https://www.jianshu.com/p/b8a8b5cae365" target="_blank" rel="noopener">https://www.jianshu.com/p/b8a8b5cae365</a><br>來源：简书</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/Xcode/" rel="tag"># Xcode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/19/同一客户端下使用github、gitee和gitlab等账号/" rel="next" title="同一客户端下使用github、gitee和gitlab等账号">
+                <i class="fa fa-chevron-left"></i> 同一客户端下使用github、gitee和gitlab等账号
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/17/在Xcode9中使用git进行版本管理（GitHub篇）/" rel="prev" title="在Xcode9中使用git进行版本管理（GitHub篇）">
+                在Xcode9中使用git进行版本管理（GitHub篇） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HW</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HW</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
