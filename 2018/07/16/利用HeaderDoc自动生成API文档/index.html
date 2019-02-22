@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="先贴链接：利用HeaderDoc自动生成API文档  关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7开始集成在Xcode中的HeaderDoc。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用HeaderDoc自动生成API文档">
+<meta property="og:url" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/index.html">
+<meta property="og:site_name" content="HW的博客">
+<meta property="og:description" content="先贴链接：利用HeaderDoc自动生成API文档  关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7开始集成在Xcode中的HeaderDoc。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/1.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/2.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/3.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/4.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/5.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/6.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/7.png">
+<meta property="og:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/8.png">
+<meta property="og:updated_time" content="2018-07-16T08:35:46.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用HeaderDoc自动生成API文档">
+<meta name="twitter:description" content="先贴链接：利用HeaderDoc自动生成API文档  关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7开始集成在Xcode中的HeaderDoc。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。">
+<meta name="twitter:image" content="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/利用HeaderDoc自动生成API文档/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/">
+
+
+
+
+
+  <title>利用HeaderDoc自动生成API文档 | HW的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HW的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">愿岁月静好，时光不老</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tryagainplease.github.io/2018/07/16/利用HeaderDoc自动生成API文档/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HW">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HW的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用HeaderDoc自动生成API文档</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T15:50:00+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/转载/" itemprop="url" rel="index">
+                    <span itemprop="name">转载</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong> 先贴链接：</strong><br><a href="https://shengpan.net/headerdoc/" target="_blank" rel="noopener">利用HeaderDoc自动生成API文档</a></p>
+<p> 关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7开始集成在Xcode中的HeaderDoc。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。<br><a id="more"></a></p>
+<h4 id="用HeaderDoc有什么好处？"><a href="#用HeaderDoc有什么好处？" class="headerlink" title="用HeaderDoc有什么好处？"></a>用HeaderDoc有什么好处？</h4><p>将鼠标移动到某一行方法上，按option+鼠标左键试试？<br><img src="利用HeaderDoc自动生成API文档/1.png" alt="1"><br>可以自动导出文档<br><img src="利用HeaderDoc自动生成API文档/2.png" alt="2"><br><img src="利用HeaderDoc自动生成API文档/3.png" alt="3"><br>居然如此炫酷，还不赶紧跟我一起用起HeaderDoc,走(tiao)上(jin)人(wen)生(dang)巅(da)峰(keng)？</p>
+<h4 id="HeaderDoc-的注释标准"><a href="#HeaderDoc-的注释标准" class="headerlink" title="HeaderDoc 的注释标准"></a>HeaderDoc 的注释标准</h4><p>HeaderDoc的注释，一般我们会用到以下几种：</p>
+<h5 id="头文件注释"><a href="#头文件注释" class="headerlink" title="头文件注释"></a>头文件注释</h5><p>头文件基本信息。这个用在每个源代码文件的头文件的最开头。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line"> @header UIImage+Scale.h</span><br><span class="line"></span><br><span class="line"> @abstract 图片压缩的Category</span><br><span class="line"></span><br><span class="line"> @author Created by Pan on 16/1/24.</span><br><span class="line"></span><br><span class="line"> @version 1.2.0 16/1/24 Creation</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@header</code> 与该源代码文件的名字一致</li>
+<li><code>@abstract</code> 关于这个源代码文件的一些基本描述</li>
+<li><code>@author</code> Sheng Pan (作者信息)</li>
+<li><code>@version</code> 1.2.0 2012/01/20 Creation (此文档的版本信息)</li>
+</ul>
+<h5 id="类注释"><a href="#类注释" class="headerlink" title="类注释"></a>类注释</h5><p>关于此类的一些信息。此注释用在类声明的开头。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@class PSCarouselView</span><br><span class="line"></span><br><span class="line">@abstract 轮播控件，实现了常见的图片轮播功能。</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@class</code>与该类名一致</li>
+</ul>
+<h5 id="方法注释"><a href="#方法注释" class="headerlink" title="方法注释"></a>方法注释</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line"> @abstract 将图片等比缩小</span><br><span class="line"></span><br><span class="line"> @discussion 将图片等比缩小,注意:此方法在主线程运行，处理大量图片请使用scaleImageOnBackgroud:</span><br><span class="line"></span><br><span class="line"> @param ratio 缩小的倍数。例如，如想缩小为原图的1/2 ratio = 2.0</span><br><span class="line"></span><br><span class="line"> @result UIImage</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@discussion</code> 该方法的详细描述，包括方法的一些注意事项，适用情况条件等等。</li>
+</ul>
+<h5 id="枚举注释"><a href="#枚举注释" class="headerlink" title="枚举注释"></a>枚举注释</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line"> @enum Gender</span><br><span class="line"></span><br><span class="line"> @abstract 性别枚举</span><br><span class="line"></span><br><span class="line"> @constant GenderUnknow 性别未知</span><br><span class="line"></span><br><span class="line"> @constant GenderMale 男</span><br><span class="line"></span><br><span class="line"> @constant GenderFemale 女</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@enum</code> 与枚举名称一致</li>
+<li><code>@constant</code> 与枚举值一致，后面添加描述</li>
+</ul>
+<h5 id="Category注释"><a href="#Category注释" class="headerlink" title="Category注释"></a>Category注释</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line"> @category  Scale</span><br><span class="line"></span><br><span class="line"> @abstract  UIImage的Category,添加图片压缩的相关功能</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@category</code> 与Category名称一致</li>
+</ul>
+<h5 id="Protocol注释"><a href="#Protocol注释" class="headerlink" title="Protocol注释"></a>Protocol注释</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@protocol HTModelCallBack</span><br><span class="line"></span><br><span class="line">@abstract Model的回调接口。</span><br><span class="line"></span><br><span class="line">@discussion 想接收Model回调的类，申明并实现此接口，即可获取从HTBaseModel中回调的信息。注意：接收回调的前提，是使用DESIGNATED_INITIALIZER来初始化HTBaseModel(或其子类).</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@Protocol</code> 与Protocol名称一致</li>
+</ul>
+<p> 常用的注释基本上就是这些，如果还需要了解更多注释的关键字请查阅<a href="https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/HeaderDoc/usage/usage.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h4 id="自动生成标准注释"><a href="#自动生成标准注释" class="headerlink" title="自动生成标准注释"></a>自动生成标准注释</h4><p>以上的注释格式如此繁琐，手工输入绝对不是我等懒鬼的作风。自动生成注释有以下几种方法</p>
+<ul>
+<li>修改Xcode模版文件，一劳永逸。</li>
+<li>利用Xode的code snapshot，快速编写注释。</li>
+<li>fork一份VV-Documentor-Xcode然后修改里面的注释风格。（VV-Documentor-Xcode原来的注释风格不支持导出文档）。</li>
+</ul>
+<p>后两种不多做介绍，在此介绍一下修改Xcode模版文件的方法。<br><strong> 打开finder，前往如下路径 </strong><br><code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/Source/Cocoa Touch Class.xctemplate</code></p>
+<p>我们会看到这样一个目录<br><img src="利用HeaderDoc自动生成API文档/4.png" alt="4"><br>每个文件夹下面的文件，就是各种系统类(包括你继承下来的子类)的模版文件。修改哪个文件夹下的模版文件，创建对应类(和继承自其子类的类)时，就会自动生成模版里预定的注释。</p>
+<p>文件夹内包含了.h和.m两份文件，分别对应.h和.m文件的模版<br><img src="利用HeaderDoc自动生成API文档/5.png" alt="5"><br>我们打开.h模版文件，可以看到如下信息<br><img src="利用HeaderDoc自动生成API文档/6.png" alt="6"><br>此处有几个系统的宏</p>
+<ul>
+<li><code>FILENAME</code>：文件名</li>
+<li><code>PROJECTNAME</code>：项目名</li>
+<li><code>FULLUSERNAME</code>：当前mac用户全称</li>
+<li><code>COPYRIGHT</code>：版权声明</li>
+</ul>
+<p>我们将头文件修改为如下格式，在创建类的时候就可以自动生成我们需要的注释格式了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">  @header ___FILENAME___</span><br><span class="line"></span><br><span class="line">  @abstract &lt;#abstract#&gt;</span><br><span class="line"></span><br><span class="line">  @author Created by ___FULLUSERNAME___ on ___DATE___.</span><br><span class="line"></span><br><span class="line">  @version &lt;#version#&gt; ___DATE___ Creation</span><br><span class="line"></span><br><span class="line">___COPYRIGHT___</span><br><span class="line"></span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">___IMPORTHEADER_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">/*!</span><br><span class="line"></span><br><span class="line">  @class ___FILEBASENAMEASIDENTIFIER___</span><br><span class="line"></span><br><span class="line">  @abstract &lt;#description#&gt;</span><br><span class="line"></span><br><span class="line"> */</span><br><span class="line">@interface ___FILEBASENAMEASIDENTIFIER___ : ___VARIABLE_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>其他文件如法炮制即可。</p>
+<p><a href="http://swift.gg/2017/12/10/Customizing-the-file-header-comment-and-other-text-macros-in-Xcode-9/" target="_blank" rel="noopener">在 Xcode9 中自定义文件头部注释和其他文本宏</a></p>
+<p><em>注意:</em> 记得逐一修改Cocoa Touch Class.xctemplate文件夹内每一个类的模版文件。只有修改过的类和其子类会起作用。</p>
+<h4 id="自动导出文档。"><a href="#自动导出文档。" class="headerlink" title="自动导出文档。"></a>自动导出文档。</h4><p>规范的注释标好后，导出文档就很方便了。有两种方法可以导出文档。</p>
+<h5 id="用命令行导出文档"><a href="#用命令行导出文档" class="headerlink" title="用命令行导出文档"></a>用命令行导出文档</h5><p>首先输出文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">headerdoc2html -o DESTINATION_PATH PROJECT_PATH</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如~/Desktop/documentation</li>
+<li><code>PROJECT_PATH</code> ：项目目录。如~/Desktop/project</li>
+</ul>
+<p>然后创建一个文档索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gatherheaderdoc DESTINATION_PATH INDEX_PAGE_NAME</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如~/Desktop/documentation</li>
+<li><code>INDEX_PAGE_NAME</code>：索引页的名字。如index.html</li>
+</ul>
+<h5 id="用Xcode-Build一份文档"><a href="#用Xcode-Build一份文档" class="headerlink" title="用Xcode Build一份文档"></a>用Xcode Build一份文档</h5><p>这个方法本质上也是用命令行导出文档。无非是可以不再需要手动管理文档路径，每个项目可以对应一个文档路径。用流行的话来说，就是一次配置，到处留情。哦不，是一次配置，自动运行。</p>
+<p>首先在你的项目中新建一个target。类型选择为Other-Aggregate。<br><img src="利用HeaderDoc自动生成API文档/7.png" alt="7"><br>在Target的Build-Phases中，点击加号，选择New Run Phases Script。<br><img src="利用HeaderDoc自动生成API文档/8.png" alt="8"><br>粘贴如下脚本（注意修改你自己的工程目录和导出目录）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># shell script goes here</span><br><span class="line"></span><br><span class="line">headerdoc2html -o ~/Desktop/doc /Users/pan/DEV/iOS/ios-standardization/Example/Pods/Headers/Public/HTStandard</span><br><span class="line"></span><br><span class="line">gatherheaderdoc ~/Desktop/doc index.html</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure></p>
+<p>最后，选择这个target，并Run。然后就等待奇迹的发生吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/19/同一客户端下使用github、gitee和gitlab等账号/" rel="next" title="同一客户端下使用github、gitee和gitlab等账号">
+                <i class="fa fa-chevron-left"></i> 同一客户端下使用github、gitee和gitlab等账号
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/16/在Xcode9中使用git进行版本管理（本地篇/" rel="prev" title="在Xcode9中使用git进行版本管理（本地篇)">
+                在Xcode9中使用git进行版本管理（本地篇) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">HW</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#用HeaderDoc有什么好处？"><span class="nav-number">1.</span> <span class="nav-text">用HeaderDoc有什么好处？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HeaderDoc-的注释标准"><span class="nav-number">2.</span> <span class="nav-text">HeaderDoc 的注释标准</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#头文件注释"><span class="nav-number">2.1.</span> <span class="nav-text">头文件注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类注释"><span class="nav-number">2.2.</span> <span class="nav-text">类注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法注释"><span class="nav-number">2.3.</span> <span class="nav-text">方法注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#枚举注释"><span class="nav-number">2.4.</span> <span class="nav-text">枚举注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Category注释"><span class="nav-number">2.5.</span> <span class="nav-text">Category注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Protocol注释"><span class="nav-number">2.6.</span> <span class="nav-text">Protocol注释</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动生成标准注释"><span class="nav-number">3.</span> <span class="nav-text">自动生成标准注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动导出文档。"><span class="nav-number">4.</span> <span class="nav-text">自动导出文档。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#用命令行导出文档"><span class="nav-number">4.1.</span> <span class="nav-text">用命令行导出文档</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用Xcode-Build一份文档"><span class="nav-number">4.2.</span> <span class="nav-text">用Xcode Build一份文档</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HW</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
